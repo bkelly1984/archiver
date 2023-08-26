@@ -18,11 +18,11 @@ parser.add_argument('source', type=os.path.abspath, help='path to be archived')
 parser.add_argument('working_dir', type=os.path.abspath, help='archiver working directory')
 parser.add_argument('--destination', default="tar", help='destination folder name')
 parser.add_argument('--temp', default="tmp", help='temporary folder name')
-parser.add_argument('-m', '--max-size', default='1T', type=convert_tgmk,
+parser.add_argument('-m', '--max-size', default='512G', type=convert_tgmk,
                     help='maximum size of an archive file (K, M, G, P supported)')
 parser.add_argument('-c', '--checkpoint', type=os.path.abspath, default=None,
                     help='continue an archive process that last archived this path')
-parser.add_argument('-s', '--stop', default='2T', type=convert_tgmk,
+parser.add_argument('-s', '--stop', default='100T', type=convert_tgmk,
                     help='maximum size of an destination directory (K, M, G, P supported)')
 parser.add_argument('-d', '--debug', action='store_true', help='enable debug logging')
 
@@ -114,7 +114,7 @@ def archive_directory(args, dir_path):
             if path == args.checkpoint:
                 continue
             # If we are on the path of the checkpoint, go into the next directory
-            if path in args.checkpoint:
+            if path + "/" in args.checkpoint:
                 if os.path.isdir(path):
                     if archive_directory(args, path):
                         return True
