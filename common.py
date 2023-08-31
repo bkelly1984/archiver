@@ -36,14 +36,14 @@ def get_filename_range_descriptor(first_item, last_item, directory_list):
     # Get the starting range
     index = directory_list.index(first_item)
     if index == 0:
-        start_range = first_item[0].lower()
+        start_range = first_item[0]
     else:
         start_range = get_shortest_unique_string(first_item, directory_list[index - 1])
 
     # Now get the ending range, but make sure the ending range is after the start range
     index = directory_list.index(last_item)
     if index == len(directory_list) - 1:
-        end_range = last_item[0].lower()
+        end_range = last_item[0]
     else:
         end_range = get_shortest_unique_string(last_item, directory_list[index + 1], min_str=start_range)
 
@@ -56,22 +56,20 @@ def get_filename_range_descriptor(first_item, last_item, directory_list):
 
 
 def get_shortest_unique_string(include, exclude, min_str=None):
-    include_l = include.lower()
-    exclude_l = exclude.lower()
     index = 0
     while True:
         index += 1
 
         # If either string has no more letters, return the whole included string
-        if len(include_l) == index or len(exclude_l) == index:
-            return include_l
+        if len(include) == index or len(exclude) == index:
+            return include
 
         # If there is a minimum string we are not higher than, go again
-        if min_str is not None and include_l[0:index] < min_str:
+        if min_str is not None and include[0:index] < min_str:
             continue
 
         # If the strings are no longer the same at this length, return the result
-        if include_l[0:index] != exclude_l[0:index]:
+        if include[0:index] != exclude[0:index]:
             return include[0:index]
 
 

@@ -97,7 +97,7 @@ def archive_directory(args, dir_path):
 
     # Get the directory listing in alphabetical order
     directory_list = os.listdir(dir_path)
-    directory_list.sort(key=str.lower)
+    directory_list.sort()
 
     # Run through the contents of this directory
     for listing in directory_list:
@@ -120,7 +120,7 @@ def archive_directory(args, dir_path):
                         return True
                 continue
             # If we are alphabetically earlier than the checkpint, skip ahead
-            if args.checkpoint.lower() > path.lower():
+            if args.checkpoint > path:
                 continue
 
         # This size calculation could be slow, so pass the threshold value
